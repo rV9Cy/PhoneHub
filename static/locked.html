@@ -1,0 +1,8 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Phone Hub</title>
+<body style="margin:0;min-height:100vh;display:grid;place-items:center;background:#0a0e1a;color:#e6ebf5;font:16px/1.9 system-ui,Tahoma;padding:24px">
+<div style="max-width:420px;width:100%;text-align:center"><div style="font-size:48px">🔒</div><h2 style="margin:6px 0">Phone Hub</h2>
+<p dir="rtl">این مرورگر هنوز وارد نشده. توکن یا لینک کامل رو اینجا بذار.<br><small style="color:#8996b4">توکن توی فایل <code>data/.token</code> و خروجی ترمینال هست: <code>cat data/.token</code></small></p>
+<p style="color:#8996b4;font-size:14px;margin-top:0">This browser isn't signed in yet. Paste the token or the full link.</p>
+<form onsubmit="var v=this.t.value.trim(),m=v.match(/k=([^&\s]+)/);location.href='/?k='+encodeURIComponent(m?m[1]:v);return false">
+<input name="t" dir="ltr" placeholder="token / link" autofocus style="width:100%;box-sizing:border-box;padding:12px 14px;border-radius:12px;border:1px solid #1e2a47;background:#0f1627;color:#e6ebf5;font:15px ui-monospace,monospace">
+<button style="margin-top:12px;width:100%;padding:11px;border:0;border-radius:12px;background:linear-gradient(135deg,#5eead4,#60a5fa);color:#04211d;font:700 15px system-ui;cursor:pointer">OK</button></form></div>

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Phone Hub</title>
+<link rel="stylesheet" href="/static/vendor/xterm.css">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="nav">
+  <div class="brand"><span class="logo">⌁</span><div><h1>Phone Hub</h1><p data-i18n="tagline"></p></div></div>
+  <nav class="tabs-main" id="mainTabs">
+    <button data-view="devices" class="on"><i>▦</i><span data-i18n="nav_devices"></span></button>
+    <button data-view="term"><i>›_</i><span data-i18n="nav_term"></span></button>
+    <button data-view="guide"><i>?</i><span data-i18n="nav_guide"></span></button>
+  </nav>
+  <div class="nav-end">
+    <span id="adbBadge" class="badge">adb …</span>
+    <button class="btn sm" id="langBtn" title="Language">EN</button>
+  </div>
+</header>
+
+<main>
+  <!-- دستگاه‌ها -->
+  <section id="v-devices" class="view">
+    <div class="hero">
+      <div><h2 data-i18n="devices_title"></h2><p class="mut" data-i18n="devices_sub"></p></div>
+      <div class="stats" id="stats"></div>
+      <button class="btn primary lg" id="addBtn">＋ <span data-i18n="add_phone"></span></button>
+    </div>
+    <div id="grid" class="grid"></div>
+  </section>
+
+  <!-- ترمینال -->
+  <section id="v-term" class="view hidden">
+    <div class="ws">
+      <aside class="targets"><h4 data-i18n="targets"></h4><div id="targetList"></div></aside>
+      <div class="deck">
+        <div class="sess-tabs" id="sessTabs"></div>
+        <div class="win" id="win">
+          <div class="win-bar">
+            <div class="traffic"><i class="r"></i><i class="y"></i><i class="g"></i></div>
+            <div class="win-title"><b id="tTitle">—</b><span id="tState" class="dot"></span></div>
+            <div class="tools">
+              <select id="themeSel" title="Theme"></select>
+              <button class="ic" id="fMinus" title="A−">A−</button><button class="ic" id="fPlus" title="A+">A+</button>
+              <div class="menu-wrap"><button class="ic" id="quickBtn" title="Quick commands">⚡</button><div class="menu hidden" id="quickMenu"></div></div>
+              <button class="ic on" id="tRtl" data-i18n-title="rtl_title">RTL</button>
+              <button class="ic" id="tCopy" data-i18n-title="copy">⧉</button>
+              <button class="ic" id="tPaste" data-i18n-title="paste">⎘</button>
+              <button class="ic" id="tClear" data-i18n-title="clear">⌫</button>
+              <button class="ic" id="tRe" data-i18n-title="reconnect">↻</button>
+              <button class="ic" id="tFull" data-i18n-title="fullscreen">⛶</button>
+            </div>
+          </div>
+          <div id="termHost"></div>
+          <div id="termEmpty" class="term-empty"><div>›_</div><p data-i18n="term_empty"></p></div>
+          <div class="kbar hidden" id="kbar"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- آموزش -->
+  <section id="v-guide" class="view hidden"><div id="guide"></div></section>
+</main>
+
+<!-- مودال افزودن -->
+<div id="modal" class="overlay hidden">
+  <div class="sheet">
+    <div class="sheet-head"><h3 id="mTitle"></h3><button class="x" data-close>✕</button></div>
+    <div class="tabs" id="tabs">
+      <button data-tab="usb" class="on">USB</button>
+      <button data-tab="net" data-i18n="tab_net"></button>
+      <button data-tab="manual" data-i18n="tab_manual"></button>
+    </div>
+    <section data-pane="usb">
+      <p class="hint" data-i18n-html="usb_hint"></p>
+      <div id="usbList" class="list"></div>
+      <div class="row"><button class="btn" id="usbRefresh" data-i18n="search_again"></button><button class="btn" id="pushSetup" data-i18n="push_setup"></button></div>
+      <pre class="code hidden" id="pushHelp"></pre>
+    </section>
+    <section data-pane="net" class="hidden">
+      <p class="hint" data-i18n-html="net_hint"></p>
+      <button class="btn primary" id="scanBtn"></button>
+      <div id="scanInfo" class="hint"></div><div id="scanList" class="list"></div>
+    </section>
+    <section data-pane="manual" class="hidden">
+      <form id="form" autocomplete="off">
+        <label><span data-i18n="f_name"></span><input name="name"></label>
+        <div class="two"><label>IP<input name="host" dir="ltr" placeholder="192.168.1.20"></label><label><span data-i18n="f_port"></span><input name="port" dir="ltr" value="8022"></label></div>
+        <label><span data-i18n="f_user"></span><input name="user" dir="ltr" placeholder="u0_a123"></label>
+        <label><span data-i18n="f_pass"></span> <small data-i18n="f_pass_note"></small><input name="password" type="password" dir="ltr"></label>
+        <button class="btn primary wide" type="submit" data-i18n="save"></button>
+      </form>
+    </section>
+  </div>
+</div>
+
+<div id="pw" class="overlay hidden">
+  <form class="sheet small" id="pwForm">
+    <h3 data-i18n="pw_title"></h3><p class="hint" data-i18n="pw_hint"></p>
+    <input id="pwInput" type="password" dir="ltr">
+    <div class="row" style="margin-top:12px"><button class="btn primary" type="submit" data-i18n="connect"></button><button class="btn" type="button" data-close data-i18n="cancel"></button></div>
+  </form>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+<script src="/static/vendor/xterm.js"></script>
+<script src="/static/vendor/xterm-addon-fit.js"></script>
+<script src="/static/i18n.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>

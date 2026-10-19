@@ -1,0 +1,5 @@
+flask>=3.0
+flask-sock>=0.7
+paramiko>=3.4
+arabic-reshaper>=3.0
+pywinpty>=2.0; sys_platform == "win32"
